@@ -11,11 +11,19 @@ export default async function Page({
     default: (props: MDXProps) => Element;
   };
 
-  return <Post />;
+  return (
+    <div className="min-h-screen bg-brand-post-bg">
+      <div className="mx-auto max-w-2xl px-4 py-12">
+        <article className="prose prose-invert prose-headings:text-brand-post-accent prose-headings:font-semibold prose-strong:text-white prose-em:text-brand-post-text/80 prose-a:text-brand-post-accent prose-a:no-underline hover:prose-a:underline prose-code:text-brand-post-accent prose-code:bg-white/5 prose-blockquote:border-brand-post-accent prose-blockquote:text-brand-post-text/70 text-brand-post-text">
+          <Post />
+        </article>
+      </div>
+    </div>
+  );
 }
 
 export async function generateStaticParams() {
-  let posts = await getPosts();
+  const posts = await getPosts();
   return posts.map((post) => ({ slug: post.slug }));
 }
 

@@ -12,7 +12,11 @@ export default async function Page({
 
   if (!til) return <p>TIL not found.</p>;
 
-  return <FeedTIL til={til} />;
+  return (
+    <div className="min-h-screen bg-brand-til-bg">
+      <FeedTIL til={til} />
+    </div>
+  );
 }
 
 export async function generateStaticParams() {

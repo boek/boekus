@@ -7,16 +7,20 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  let notes = await getNotes();
+  const notes = await getNotes();
   const note = notes.find((n) => n.slug === slug);
 
   if (!note) return <p>Note not found.</p>;
 
-  return <FeedNote note={note} />;
+  return (
+    <div className="min-h-screen bg-brand-note-bg">
+      <FeedNote note={note} />
+    </div>
+  );
 }
 
 export async function generateStaticParams() {
-  let notes = await getNotes();
+  const notes = await getNotes();
   return notes.map((n) => ({ slug: n.slug }));
 }
 

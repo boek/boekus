@@ -1,3 +1,7 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
 const phrases = [
   "would rather be on my bike 🚲",
   "would rather be using my camera 📸",
@@ -13,11 +17,16 @@ const phrases = [
 ];
 
 export default function Footer() {
-  const phrase = phrases[Math.floor(Math.random() * phrases.length)];
+  const [phrase, setPhrase] = useState<string | null>(null);
+
+  useEffect(() => {
+    setPhrase(phrases[Math.floor(Math.random() * phrases.length)]!);
+  }, []);
 
   return (
     <footer className="px-4 py-8 text-center text-sm text-white/30">
       <p>{phrase}</p>
+      <p className="mt-1">&copy; {new Date().getFullYear()} Jeff Boek</p>
     </footer>
   );
 }

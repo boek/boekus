@@ -7,7 +7,9 @@ export default function HomePage() {
       <ul>
         {posts.map((post) => (
           <li key={post.slug}>
-            <Link href={`/posts/${post.slug}`}>{post.slug}</Link>
+            <Link href={`/posts/${post.slug}`}>
+              {post.title} - {post.date}
+            </Link>
           </li>
         ))}
       </ul>

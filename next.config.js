@@ -4,6 +4,7 @@
  */
 import createMDX from "@next/mdx";
 import remarkFrontmatter from "remark-frontmatter";
+import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import path from "path";
 import { fileURLToPath } from "url";
 import "./src/env.js";
@@ -21,7 +22,7 @@ const config = {
 
 const withMDX = createMDX({
   options: {
-    remarkPlugins: [remarkFrontmatter],
+    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
   },
 });
 

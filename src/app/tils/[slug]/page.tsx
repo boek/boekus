@@ -1,5 +1,6 @@
 import { getTILs } from "~/lib/content";
 import FeedTIL from "~/components/FeedTIL";
+import BackLink from "~/components/BackLink";
 
 export default async function Page({
   params,
@@ -14,6 +15,7 @@ export default async function Page({
 
   return (
     <div className="min-h-screen bg-brand-til-bg">
+      <BackLink href="/" className="text-brand-til-accent" />
       <FeedTIL til={til} />
     </div>
   );

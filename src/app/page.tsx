@@ -31,24 +31,30 @@ export default async function HomePage() {
   const groups = groupConsecutive(all);
 
   return (
-    <main>
-      <ul>
-        {groups.map((group, i) => (
-          <li key={i} className={`shadow-inner-bottom ${bgColor[group.type]}`}>
-            <div className="divide-y divide-white/5">
-              {group.items.map((item) =>
-                item.type === "post" ? (
-                  <FeedPost key={item.slug} post={item} />
-                ) : item.type === "til" ? (
-                  <FeedTIL key={item.slug} til={item} />
-                ) : (
-                  <FeedNote key={item.slug} note={item} />
-                ),
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </main>
+    <>
+      <main>
+        <ul>
+          {groups.map((group, i) => (
+            <li key={i} className={`shadow-inner-bottom ${bgColor[group.type]}`}>
+              <div className="divide-y divide-white/5">
+                {group.items.map((item) =>
+                  item.type === "post" ? (
+                    <FeedPost key={item.slug} post={item} />
+                  ) : item.type === "til" ? (
+                    <FeedTIL key={item.slug} til={item} />
+                  ) : (
+                    <FeedNote key={item.slug} note={item} />
+                  ),
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </main>
+      <footer className="px-4 py-8 text-center text-sm text-white/30">
+        <p>Probably riding my 🚲 in PDX</p>
+        <p className="mt-1">&copy; {new Date().getFullYear()} Jeff Boek</p>
+      </footer>
+    </>
   );
 }

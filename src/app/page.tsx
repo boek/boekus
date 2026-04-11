@@ -1,12 +1,14 @@
 import { getAll } from "~/lib/content";
-import type { Note, Post } from "~/lib/content";
+import type { Note, TIL, Post } from "~/lib/content";
 import FeedNote from "~/components/FeedNote";
+import FeedTIL from "~/components/FeedTIL";
 import FeedPost from "~/components/FeedPost";
 import Header from "~/components/Header";
 
-type Group = { type: "note" | "post"; items: (Note | Post)[] };
+type ContentItem = Note | TIL | Post;
+type Group = { type: ContentItem["type"]; items: ContentItem[] };
 
-function groupConsecutive(items: (Note | Post)[]): Group[] {
+function groupConsecutive(items: ContentItem[]): Group[] {
   return items.reduce<Group[]>((groups, item) => {
     const last = groups.at(-1);
     if (last && last.type === item.type) {
@@ -18,6 +20,12 @@ function groupConsecutive(items: (Note | Post)[]): Group[] {
   }, []);
 }
 
+const bgColor: Record<ContentItem["type"], string> = {
+  post: "bg-brand-amber",
+  note: "bg-brand-blue",
+  til: "bg-brand-green",
+};
+
 export default async function HomePage() {
   const all = await getAll();
   const groups = groupConsecutive(all);
@@ -26,14 +34,13 @@ export default async function HomePage() {
     <main>
       <ul>
         {groups.map((group, i) => (
-          <li
-            key={i}
-            className={`shadow-inner-bottom ${group.type === "post" ? "bg-brand-amber" : "bg-brand-blue"}`}
-          >
+          <li key={i} className={`shadow-inner-bottom ${bgColor[group.type]}`}>
             <div className="divide-y divide-black/10">
               {group.items.map((item) =>
                 item.type === "post" ? (
                   <FeedPost key={item.slug} post={item} />
+                ) : item.type === "til" ? (
+                  <FeedTIL key={item.slug} til={item} />
                 ) : (
                   <FeedNote key={item.slug} note={item} />
                 ),

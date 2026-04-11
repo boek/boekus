@@ -12,6 +12,10 @@ export interface Note extends Content {
   type: "note";
 }
 
+export interface TIL extends Content {
+  type: "til";
+}
+
 export interface Post extends Content {
   type: "post";
   title: string;
@@ -20,20 +24,28 @@ export interface Post extends Content {
   hasMore: boolean;
 }
 
+function parseSlugDate(f: string): { slug: string; date: Date } {
+  const date = new Date(
+    +f.slice(0, 4),
+    +f.slice(4, 6) - 1,
+    +f.slice(6, 8),
+    +f.slice(8, 10),
+    +f.slice(10, 12),
+  );
+  const slug = f.replace(/\.mdx?$/, "");
+  return { slug, date };
+}
+
 export async function getNotes(): Promise<Note[]> {
   return readdirSync(contentDir + "/notes")
     .filter((f) => f.endsWith(".mdx"))
-    .map((f) => {
-      const date = new Date(
-        +f.slice(0, 4),
-        +f.slice(4, 6) - 1,
-        +f.slice(6, 8),
-        +f.slice(8, 10),
-        +f.slice(10, 12),
-      );
-      const slug = f.replace(/\.mdx?$/, "");
-      return { type: "note" as const, slug, date };
-    });
+    .map((f) => ({ type: "note" as const, ...parseSlugDate(f) }));
+}
+
+export async function getTILs(): Promise<TIL[]> {
+  return readdirSync(contentDir + "/tils")
+    .filter((f) => f.endsWith(".mdx"))
+    .map((f) => ({ type: "til" as const, ...parseSlugDate(f) }));
 }
 
 const sumamryLength = 350;
@@ -64,9 +76,9 @@ export async function getPosts(): Promise<Post[]> {
   );
 }
 
-export async function getAll(): Promise<(Note | Post)[]> {
-  const [notes, posts] = await Promise.all([getNotes(), getPosts()]);
-  return [...notes, ...posts].sort(
+export async function getAll(): Promise<(Note | TIL | Post)[]> {
+  const [notes, tils, posts] = await Promise.all([getNotes(), getTILs(), getPosts()]);
+  return [...notes, ...tils, ...posts].sort(
     (a, b) => b.date.getTime() - a.date.getTime(),
   );
 }

@@ -23,9 +23,9 @@ export default function FeedPost({ post }: { post: Post }) {
           </Link>
         )}
       </div>
-      <p className="shrink-0 text-sm text-amber-800">
+      <Link href={`/posts/${post.slug}`} className="shrink-0 text-sm text-amber-800 hover:underline">
         {post.date.toLocaleDateString()}
-      </p>
+      </Link>
     </div>
   );
 }

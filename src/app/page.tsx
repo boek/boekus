@@ -12,7 +12,7 @@ type Group = { type: ContentItem["type"]; items: ContentItem[] };
 function groupConsecutive(items: ContentItem[]): Group[] {
   return items.reduce<Group[]>((groups, item) => {
     const last = groups.at(-1);
-    if (last && last.type === item.type) {
+    if (last?.type === item.type) {
       last.items.push(item);
     } else {
       groups.push({ type: item.type, items: [item] });

@@ -21,9 +21,9 @@ function groupConsecutive(items: ContentItem[]): Group[] {
 }
 
 const bgColor: Record<ContentItem["type"], string> = {
-  post: "bg-brand-amber",
-  note: "bg-brand-blue",
-  til: "bg-brand-green",
+  post: "bg-brand-post-bg",
+  note: "bg-brand-note-bg",
+  til: "bg-brand-til-bg",
 };
 
 export default async function HomePage() {
@@ -35,7 +35,7 @@ export default async function HomePage() {
       <ul>
         {groups.map((group, i) => (
           <li key={i} className={`shadow-inner-bottom ${bgColor[group.type]}`}>
-            <div className="divide-y divide-black/10">
+            <div className="divide-y divide-white/5">
               {group.items.map((item) =>
                 item.type === "post" ? (
                   <FeedPost key={item.slug} post={item} />

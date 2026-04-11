@@ -1,6 +1,5 @@
-import { readdirSync } from "node:fs";
-import path from "path";
 import type { Element, MDXProps } from "mdx/types";
+import { posts } from "~/lib/content";
 
 export default async function Page({
   params,
@@ -16,10 +15,7 @@ export default async function Page({
 }
 
 export function generateStaticParams() {
-  const postsDir = path.join(process.cwd(), "src/content/posts");
-  return readdirSync(postsDir)
-    .filter((f) => f.endsWith(".mdx"))
-    .map((f) => ({ slug: f.replace(/\.mdx?$/, "") }));
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
 export const dynamicParams = false;

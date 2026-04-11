@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Header() {
   return (
     <header className="mx-auto max-w-2xl px-4 py-8">
-      <Link href="/" className="text-3xl tracking-tight text-white">
+      <Link href="/" className="text-2xl tracking-tight text-white sm:text-3xl">
         <span className="font-semibold">JEFF</span>{" "}
         <span className="font-bold">BOEK</span>
       </Link>

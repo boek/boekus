@@ -22,7 +22,7 @@ export default async function Page({
       <BackLink href="/" className="text-brand-post-accent" />
       <div className="mx-auto max-w-2xl px-4 py-12">
         {post && (
-          <h1 className="text-brand-post-text mb-8 text-5xl font-bold tracking-tight">
+          <h1 className="mb-8 text-3xl font-bold tracking-tight text-brand-post-text sm:text-5xl">
             {post.title}
           </h1>
         )}

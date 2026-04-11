@@ -26,7 +26,6 @@ export default function Footer() {
   return (
     <footer className="px-4 py-8 text-center text-sm text-white/30">
       <p>{phrase}</p>
-      <p className="mt-1">&copy; {new Date().getFullYear()} Jeff Boek</p>
     </footer>
   );
 }

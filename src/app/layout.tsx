@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 export const metadata: Metadata = {
   title: "ITS BOEK",
   description: "MY WEBSITE",
+  icons: { icon: "/favicon.svg" },
   alternates: {
     types: {
       "application/rss+xml": "https://boek.us/feed.xml",

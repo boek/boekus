@@ -15,7 +15,7 @@ export default function FeedPost({ post }: { post: Post }) {
           {post.date.toLocaleDateString()}
         </Link>
       </div>
-      <div className="prose prose-sm prose-invert prose-headings:text-brand-post-accent prose-headings:font-semibold prose-strong:text-white prose-em:text-brand-post-text/80 prose-a:text-brand-post-accent prose-a:no-underline hover:prose-a:underline prose-code:text-brand-post-accent prose-code:bg-white/5 prose-blockquote:border-brand-post-accent prose-blockquote:text-brand-post-text/70 text-brand-post-text">
+      <div className="prose prose-sm prose-invert prose-headings:text-brand-post-accent prose-headings:font-semibold prose-strong:text-white prose-em:text-brand-post-text/80 prose-a:text-brand-post-accent prose-a:no-underline [&_a:hover]:underline prose-code:text-brand-post-accent prose-code:bg-white/5 prose-blockquote:border-brand-post-accent prose-blockquote:text-brand-post-text/70 text-brand-post-text">
         <Markdown>{post.excerpt}</Markdown>
       </div>
       {post.hasMore && (

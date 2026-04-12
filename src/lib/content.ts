@@ -36,22 +36,27 @@ function parseSlugDate(f: string): { slug: string; date: Date } {
   return { slug, date };
 }
 
+const byDateDesc = (a: Content, b: Content) =>
+  b.date.getTime() - a.date.getTime();
+
 export async function getNotes(): Promise<Note[]> {
   return readdirSync(contentDir + "/notes")
     .filter((f) => f.endsWith(".mdx"))
-    .map((f) => ({ type: "note" as const, ...parseSlugDate(f) }));
+    .map((f) => ({ type: "note" as const, ...parseSlugDate(f) }))
+    .sort(byDateDesc);
 }
 
 export async function getTILs(): Promise<TIL[]> {
   return readdirSync(contentDir + "/tils")
     .filter((f) => f.endsWith(".mdx"))
-    .map((f) => ({ type: "til" as const, ...parseSlugDate(f) }));
+    .map((f) => ({ type: "til" as const, ...parseSlugDate(f) }))
+    .sort(byDateDesc);
 }
 
 const sumamryLength = 350;
 
 export async function getPosts(): Promise<Post[]> {
-  return await Promise.all(
+  const posts = await Promise.all(
     readdirSync(contentDir + "/posts")
       .filter((f) => f.endsWith(".mdx"))
       .map(async (f) => {
@@ -61,8 +66,8 @@ export async function getPosts(): Promise<Post[]> {
         };
         const raw = readFileSync(path.join(contentDir, "posts", f), "utf-8");
         const body = raw.replace(/^---[\s\S]*?---\n/, "").trim();
-        const excerpt = body.slice(0, sumamryLength);
         const hasMore = body.length > sumamryLength;
+        const excerpt = hasMore ? body.slice(0, sumamryLength) + "..." : body.slice(0, sumamryLength);
         return {
           type: "post" as const,
           slug,
@@ -73,6 +78,7 @@ export async function getPosts(): Promise<Post[]> {
         };
       }),
   );
+  return posts.sort(byDateDesc);
 }
 
 export async function getAll(): Promise<(Note | TIL | Post)[]> {
@@ -81,7 +87,5 @@ export async function getAll(): Promise<(Note | TIL | Post)[]> {
     getTILs(),
     getPosts(),
   ]);
-  return [...notes, ...tils, ...posts].sort(
-    (a, b) => b.date.getTime() - a.date.getTime(),
-  );
+  return [...notes, ...tils, ...posts].sort(byDateDesc);
 }

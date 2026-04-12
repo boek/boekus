@@ -22,11 +22,20 @@ export default async function Page({
       <BackLink href="/" className="text-brand-post-accent" />
       <div className="mx-auto max-w-2xl px-4 py-12">
         {post && (
-          <h1 className="mb-8 text-3xl font-bold tracking-tight text-brand-post-text sm:text-5xl">
-            {post.title}
-          </h1>
+          <>
+            <h1 className="mb-2 text-3xl font-bold tracking-tight text-brand-post-text sm:text-5xl">
+              {post.title}
+            </h1>
+            <p className="mb-8 text-sm text-brand-post-text/50">
+              {post.date.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
+          </>
         )}
-        <article className="prose prose-invert prose-headings:text-brand-post-accent prose-headings:font-semibold prose-strong:text-white prose-em:text-brand-post-text/80 prose-a:text-brand-post-accent prose-a:no-underline hover:prose-a:underline prose-code:text-brand-post-accent prose-code:bg-white/5 prose-blockquote:border-brand-post-accent prose-blockquote:text-brand-post-text/70 text-brand-post-text">
+        <article className="prose prose-invert prose-headings:text-brand-post-accent prose-headings:font-semibold prose-strong:text-white prose-em:text-brand-post-text/80 prose-a:text-brand-post-accent prose-a:no-underline [&_a:hover]:underline prose-code:text-brand-post-accent prose-code:bg-white/5 prose-blockquote:border-brand-post-accent prose-blockquote:text-brand-post-text/70 text-brand-post-text">
           <Post />
         </article>
       </div>
